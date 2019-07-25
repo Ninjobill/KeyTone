@@ -1,0 +1,232 @@
+<!DOCTYPE html>
+<html>
+<head>
+	<title>Circles</title>
+	<script type="text/javascript" src="assets/js/lib/dist/paper-full.js"></script>
+	<script type="text/javascript" src="https://cdnjs.cloudflare.com/ajax/libs/howler/2.1.2/howler.js"></script>
+	<link rel="stylesheet" type="text/css" href="assets/css/Patatap.css">
+	
+
+	<script type="text/paperscript" canvas="myCanvas">
+		
+		var keyData = {
+			a: {
+				sound: new Howl({
+					src: ['assets/sounds/bubbles.mp3']
+				})	
+			},
+			s: {
+				sound: new Howl({
+					src: ['assets/sounds/clay.mp3']
+				})	
+			},
+			d: {
+				sound: new Howl({
+					src: ['assets/sounds/confetti.mp3']
+				})	
+			},
+			f: {
+				sound: new Howl({
+					src: ['assets/sounds/corona.mp3']
+				})	
+			},
+			g: {
+				sound: new Howl({
+					src: ['assets/sounds/dotted-spiral.mp3']
+				})	
+			},
+			h: {
+				sound: new Howl({
+					src: ['assets/sounds/flash-1.mp3']
+				})	
+			},
+			j: {
+				sound: new Howl({
+					src: ['assets/sounds/flash-2.mp3']
+				})	
+			},
+			k: {
+				sound: new Howl({
+					src: ['assets/sounds/glimmer.mp3']
+				})	
+			},
+			l: {
+				sound: new Howl({
+					src: ['assets/sounds/moon.mp3']
+				})	
+			},
+			z: {
+				sound: new Howl({
+					src: ['assets/sounds/pinwheel.mp3']
+				})	
+			},
+			x: {
+				sound: new Howl({
+					src: ['assets/sounds/piston-1.mp3']
+				})	
+			},
+			c: {
+				sound: new Howl({
+					src: ['assets/sounds/piston-2.mp3']
+				})	
+			},
+			v: {
+				sound: new Howl({
+					src: ['assets/sounds/piston-3.mp3']
+				})	
+			},
+			b: {
+				sound: new Howl({
+					src: ['assets/sounds/prism-1.mp3']
+				})	
+			},
+			n: {
+				sound: new Howl({
+					src: ['assets/sounds/prism-2.mp3']
+				})	
+			},
+			m: {
+				sound: new Howl({
+					src: ['assets/sounds/prism-3.mp3']
+				})	
+			},
+			q: {
+				sound: new Howl({
+					src: ['assets/sounds/splits.mp3']
+				})	
+			},
+			w: {
+				sound: new Howl({
+					src: ['assets/sounds/squiggle.mp3']
+				})	
+			},
+			e: {
+				sound: new Howl({
+					src: ['assets/sounds/strike.mp3']
+				})	
+			},
+			r: {
+				sound: new Howl({
+					src: ['assets/sounds/suspension.mp3']
+				})	
+			},
+			t: {
+				sound: new Howl({
+					src: ['assets/sounds/timer.mp3']
+				})	
+			},
+			y: {
+				sound: new Howl({
+					src: ['assets/sounds/ufo.mp3']
+				})	
+			},
+			u: {
+				sound: new Howl({
+					src: ['assets/sounds/veil.mp3']
+				})	
+			},
+			i: {
+				sound: new Howl({
+					src: ['assets/sounds/wipe.mp3']
+				})	
+			},
+			o: {
+				sound: new Howl({
+					src: ['assets/sounds/zig-zag.mp3']
+				})	
+			},
+			p: {
+				sound: new Howl({
+					src: ['assets/sounds/flash-3.mp3']
+				})	
+			}
+		}
+
+		var circles = [];
+		function onKeyDown(event) {
+			if(keyData[event.key]){
+				var maxPoint = new Point(view.size.width, view.size.height);
+				var randomPoint = Point.random();
+				var point = maxPoint * randomPoint;
+				var newCircle = new Path.Circle(point, 500);
+				newCircle.fillColor = Color.random();
+				keyData[event.key].sound.play();
+				circles.push(newCircle);
+			}
+		}
+
+		function onFrame(event){
+			for(var i =0;i<circles.length;i++) {
+				circles[i].fillColor.hue += 5;
+				circles[i].scale(.9);
+				if (circles[i].area<1) {
+					circles[i].remove();
+					circles.splice(i, 1);
+				}
+			}		
+		}
+		
+
+	// Create a Paper.js Path to draw a line into it:
+	// var path = new Path();
+	// // Give the stroke a color
+	// path.strokeColor = 'black';
+	// var start = new Point(100, 100);
+	// // Move to start and draw a line from there
+	// path.moveTo(start);
+	// // Note the plus operator on Point objects.
+	// // PaperScript does that for us, and much more!
+	// path.lineTo(start + [ 100, -50 ]);
+
+	// var circle2 = new Path.Circle(new Point(50, 50), 300);
+	// circle2.fillColor = 'purple';
+	// var myCircle = new Path.Circle(new Point(100, 70), 20);
+	// myCircle.fillColor = 'white';
+
+	// 	var circlePath = new Path.Circle(new Point(25, 50), 15);
+	// 	circlePath.strokeColor = 'purple';
+
+	// // clone the path and store it in a variable
+	// 	var clonedPath = circlePath.clone();
+
+	// 	for(var i = 0; i<101; i++) {
+	// 	clonedPath.position += new Point(75, 0);
+	// 	clonedPath.strokeColor = 'red';
+
+	// 	if (i % 10 === 0) {
+	// 	circlePath.position += new Point(0, 50);	
+	// 	}
+	// 	// else if (i % 2 === 0) {
+	// 	// clonedPath.strokeColor = 'red';
+	// 	// } else {
+	// 	// clonedPath.strokeColor = 'purple';	
+	// 	// }
+	// 	}
+	// var start = 50;
+	// a = 0;
+	// for (var i = 0; i < 100; i++) {
+	// if (i % 10 === 0) {
+	// 	start += 75;
+	// 	a = 0;
+	// }
+	
+	// var center = new Point(50 + a * 75, start);
+	// var path = new Path.Circle(center, 15);
+	// path.strokeColor = 'purple';
+	// a++;
+	// }
+	// for(var x = 50; x < 800; x += 75){
+	// 	for(y = 50; y< 800; y += 75) {
+	// 		var circle = new Path.Circle(new Point (x, y), 15)
+	// 		circle.strokeColor = 'purple';
+	// 	}
+	// }
+
+	</script>
+</head>
+<body>
+
+<canvas id="myCanvas" resize></canvas>
+
+</body>
+</html>
